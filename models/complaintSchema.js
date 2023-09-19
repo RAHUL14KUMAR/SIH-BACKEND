@@ -29,7 +29,9 @@ const complaintSchema=new Schema({
     isSolved:{
         type:Boolean,
         default:false
-    }
+    },
+    },{ 
+        timeStamps: true
 });
 
 module.exports=mongoose.model("complaints",complaintSchema);
