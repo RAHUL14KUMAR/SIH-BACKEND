@@ -5,6 +5,8 @@ const cors = require("cors");
 const errorMiddleware = require("./middleware/errorMiddleware");
 const connection = require("./database/db");
 
+const userRoute = require("./routes/userRoutes");
+
 const port=process.env.PORT;
 
 const app = express();
@@ -16,6 +18,7 @@ app.get("/", (req, res) => {
   res.send("hello!!!!");
 });
 
+app.use("/user", userRoute);
 
 app.use(errorMiddleware);
 

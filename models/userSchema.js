@@ -4,14 +4,17 @@ const Schema = mongoose.Schema;
 const userSchema=new Schema({
     name: {
         type: String,
-      },
-      email: {
+    },
+    email: {
         type: String,
-      },
-      password: {
+    },
+    password: {
         type: String,
-      },
-    },{ 
+    },
+    complaints:{
+        type:[]
+    }
+},  { 
     timeStamps: true 
 })
 module.exports = mongoose.model("users", userSchema);
