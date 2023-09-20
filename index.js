@@ -6,6 +6,7 @@ const errorMiddleware = require("./middleware/errorMiddleware");
 const connection = require("./database/db");
 
 const userRoute = require("./routes/userRoutes");
+const adminRoutes=require("./routes/adminRoutes");
 
 const port=process.env.PORT;
 
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", userRoute);
+app.use("/admin",adminRoutes)
 
 app.use(errorMiddleware);
 

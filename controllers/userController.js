@@ -94,27 +94,18 @@ const launchComplaint=expressAsyncHandler(async(req,res)=>{
         res.status(500).json(error);
     }
 })
-const getUserComplain=expressAsyncHandler(async(req,res)=>{
-    const {name,email}=req.user;
-    try{
-        const complainer=await complaint.find({complaintBy:email});
-        if(complainer){
-            res.status(200).json(complainer);
-        }else{
-            res.status(404).json("comlainer dont file any complain")
-        }
-    }catch(error){
-        res.status(500).json(error);
-    }
-})
+
 const getMe = expressAsyncHandler(async (req, res) => {
     const { name, email, _id,complaints} = req.user;
+    const complain=await complaint.find({complaintBy:email});
+    console.log(complain);
     res.status(200).json({
       id: _id,
       name,
       type: 'user',
       email,
-      complaints
+      complaints,
+      complain:complain
     });
   });
 
@@ -126,6 +117,5 @@ module.exports = {
   login,
   register,
   launchComplaint,
-  getUserComplain,
   getMe
 };

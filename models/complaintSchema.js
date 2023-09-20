@@ -30,6 +30,12 @@ const complaintSchema=new Schema({
         type:Boolean,
         default:false
     },
+    pathToFollow:{
+        type:Array,
+    },
+    adminDescription:{
+        type:String,
+    }
     },{ 
         timeStamps: true
 });
