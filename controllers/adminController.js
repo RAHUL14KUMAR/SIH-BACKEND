@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const adminModel = require("../models/adminSchema");
 const complaint=require("../models/complaintSchema");
+const department=require('../models/departmentSchema');
 
 const registerAdmin = expressAsyncHandler(async (req, res) => {
     const { name, email, password,state,city,district,governmentProof } = req.body;
@@ -114,15 +115,41 @@ const getMe = expressAsyncHandler(async (req, res) => {
     });
 });
 
+const addDepartmentToDatabase=expressAsyncHandler(async(req,res)=>{
+  const {departmentName,email,state,city,district,handleBy}=req.body;
+
+  try{
+    const depart=await department.find({state:state});
+    if(depart){
+      res.status(400);
+      throw new Error("department already exists already Exists");
+    }
+
+    const departments= await department.create({departmentName,email,state,city,district,handleBy})
+
+    res.status(200).json({
+      departmentName:departments.departmentName,
+      email:departments.email,
+      state:departments.email,
+      city:departments.city,
+      district:departments.district,
+      handleBy:departments.handleBy
+    })
+  }catch(error){
+    res.status(500).json(error);
+  }
+})
 
 
-  const generateJwt = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30m" });
-  };
 
-  module.exports = {
-    loginAdmin,
-    registerAdmin,
-    getMe,complaintGoToAdmin,
-    createPathForComplaint
-  };
+const generateJwt = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30m" });
+};
+
+module.exports = {
+  loginAdmin,
+  registerAdmin,
+  getMe,complaintGoToAdmin,
+  createPathForComplaint,
+  addDepartmentToDatabase
+};
